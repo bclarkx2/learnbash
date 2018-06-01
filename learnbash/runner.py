@@ -16,9 +16,10 @@ def match_stdout(inp, expected):
         stdout = get_stdout(inp)
         print("stdout: {}".format(stdout))
         print("echo goal: {}".format(stdout))
-        return stdout == expected
+        result = stdout == expected
+        return stdout, result
     except subprocess.CalledProcessError:
-        return False
+        return stdout, False
 
 
 def get_stdout(inp):
