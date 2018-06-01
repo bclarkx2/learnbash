@@ -1,0 +1,24 @@
+
+
+Structure:
+
+
+Objects:
+
+Learner
+    courses: a list of Course objects
+
+
+Course
+    name
+    description
+    lessons: a list of Lesson objects
+    start(): a function that enters the course
+    exit(): a function that quits the course
+
+
+Lesson
+    name
+    description
+    start(): a function that begins the lesson
+    exit(): a function that quits the lesson
