@@ -24,3 +24,7 @@ class Course(Cmd):
 
     def do_hello(self, line):
         print("Course says hello")
+
+    def do_quit(self, line):
+        print("Quitting course: {}".format(self.name))
+        return True
