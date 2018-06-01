@@ -7,8 +7,7 @@ from course import Course
 from lesson import Lesson
 from starter import Starter
 from exercise import InputOutputEx
-
-import subprocess
+import runner
 
 
 ###############################################################################
@@ -27,11 +26,10 @@ class EchoLesson(Lesson):
             self.echo_goal = echo_goal
 
         def verify(self, inp):
-            raw = subprocess.check_output(["bash", "-c", inp])
-            processed = raw.decode().rstrip()
-            return processed == self.echo_goal
+            return runner.match_stdout(inp, self.echo_goal)
 
-    exercises = [EchoExercise("bonjour")]
+    exercises = [EchoExercise("bonjour"),
+                 EchoExercise("This sentence has more words")]
 
     def do_hello(self, line):
         print("EchoLesson says hello")
