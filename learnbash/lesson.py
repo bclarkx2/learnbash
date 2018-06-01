@@ -22,7 +22,6 @@ class Lesson(Cmd):
         self.intro = "Starting lesson: {}".format(self.name)
 
     def start(self):
-        # self.cmdloop()
         for ex in self.exercises:
             ex.exercise()
 
