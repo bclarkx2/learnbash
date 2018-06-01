@@ -25,10 +25,21 @@ class InputOutputEx(object):
         if result:
             print(output)
             print("Correct!")
-            print(self.outro)
+            if self.outro:
+                print(self.outro)
         else:
             print("Incorrect, try again")
             self.do()
 
     def verify(self, inp):
         return "", False
+
+
+class QuestionEx(InputOutputEx):
+
+    def __init__(self, intro, answer, outro=""):
+        super().__init__(intro, outro)
+        self.answer = answer
+
+    def verify(self, inp):
+        return "", self.answer == inp

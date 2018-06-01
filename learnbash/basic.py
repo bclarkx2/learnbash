@@ -6,7 +6,7 @@
 from course import Course
 from lesson import Lesson
 from starter import Starter
-from exercise import InputOutputEx
+from exercise import InputOutputEx, QuestionEx
 from blurb import Blurb
 import runner
 
@@ -40,7 +40,9 @@ class EchoLesson(Lesson):
     items = [Blurb("The `echo` command can be used to print to the screen. Try it now!"),
              EchoAnythingEx(),
              EchoExercise("bonjour"),
-             EchoExercise("This sentence has more words")]
+             EchoExercise("This sentence has more words"),
+             QuestionEx("What is the name of the command we just learned?", "echo"),
+             Blurb("Congrats! You've finished the echo lesson!")]
 
     def do_hello(self, line):
         print("EchoLesson says hello")
@@ -51,6 +53,3 @@ class BasicCourse(Course):
     name = "BasicCourse"
 
     lessons = Starter([EchoLesson])
-
-    def do_hello(self, line):
-        print("BasicCourse says hello")

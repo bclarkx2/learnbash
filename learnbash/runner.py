@@ -14,8 +14,6 @@ import subprocess
 def match_stdout(inp, expected):
     try:
         stdout = get_stdout(inp)
-        print("stdout: {}".format(stdout))
-        print("echo goal: {}".format(stdout))
         result = stdout == expected
         return stdout, result
     except subprocess.CalledProcessError:
