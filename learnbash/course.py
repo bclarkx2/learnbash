@@ -4,6 +4,7 @@
 ###############################################################################
 
 from cmd2 import Cmd
+from starter import Starter
 
 
 ###############################################################################
@@ -13,6 +14,8 @@ from cmd2 import Cmd
 class Course(Cmd):
 
     name = "GenericCourse"
+
+    lessons = Starter([])
 
     def __init__(self):
         Cmd.__init__(self)
@@ -28,3 +31,12 @@ class Course(Cmd):
     def do_quit(self, line):
         print("Quitting course: {}".format(self.name))
         return True
+
+    def do_lessons(self, line):
+        """List lessons in course"""
+        for pos, name in enumerate(self.lessons.names(), start=1):
+            print("{}. {}".format(pos, name))
+
+    def do_start(self, line):
+        if not self.lessons.start(line):
+            print("No such lesson!")

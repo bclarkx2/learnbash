@@ -7,6 +7,7 @@
 from cmd2 import Cmd
 
 from basic import BasicCourse
+from starter import Starter
 
 
 ###############################################################################
@@ -18,21 +19,10 @@ class Learner(Cmd):
     prompt = "learnBash>"
     intro = "let's learnBash"
 
-    courses = [BasicCourse]
+    courses = Starter([BasicCourse])
 
     def __init__(self):
         Cmd.__init__(self)
-
-    # Data
-
-    def course_names(self):
-        return [c.name for c in self.courses]
-
-    def course_by_name(self, name):
-        for course in self.courses:
-            if course.name == name:
-                return course
-        return None
 
     # Operations
 
@@ -49,13 +39,9 @@ class Learner(Cmd):
     def do_courses(self, line):
         """List available courses"""
         print("Available courses:")
-        print("\n".join(self.course_names()))
+        print("\n".join(self.courses.names()))
 
     def do_start(self, line):
         """Start a course"""
-        course_class = self.course_by_name(line)
-        if course_class:
-            course = course_class()
-            course.start()
-        else:
+        if not self.courses.start(line):
             print("No such course!")
