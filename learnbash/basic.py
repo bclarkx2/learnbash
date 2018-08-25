@@ -7,6 +7,8 @@ from course import Course
 from lesson import Lesson
 from starter import Starter
 from exercise import InputOutputEx, QuestionEx
+from runner import GenericIOBashCommand
+from result import CorrectResult, ErrorResult
 from blurb import Blurb
 import runner
 
@@ -25,7 +27,16 @@ class EchoLesson(Lesson):
             super().__init__("Type 'echo <anything>' to print anything you want!")
 
         def verify(self, inp):
-            return runner.get_stdout(inp), True
+
+            tokens = inp.split()
+            if tokens[0].lower() != "echo":
+                return ErrorResult("", "Must use echo command!")
+            if len(tokens) <= 1:
+                return ErrorResult("", "Must provide arguments to echo!")
+
+            cmd = GenericIOBashCommand(inp)
+            out = cmd.run()
+            return out.to_correct_result()
 
     class EchoExercise(InputOutputEx):
 
@@ -35,7 +46,12 @@ class EchoLesson(Lesson):
             self.echo_goal = echo_goal
 
         def verify(self, inp):
-            return runner.match_stdout(inp, self.echo_goal)
+            cmd = GenericIOBashCommand(inp)
+            out = cmd.run()
+            if out.matches(self.echo_goal):
+                return out.to_correct_result()
+            else:
+                return out.to_incorrect_result("Does not match!")
 
     items = [Blurb("The `echo` command can be used to print to the screen. Try it now!"),
              EchoAnythingEx(),

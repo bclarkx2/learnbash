@@ -3,7 +3,9 @@
 # Imports                                                                     #
 ###############################################################################
 
+from result import CorrectResult, ErrorResult
 
+    
 ###############################################################################
 # Classes                                                                     #
 ###############################################################################
@@ -20,19 +22,21 @@ class InputOutputEx(object):
 
         inp = input()
 
-        output, result = self.verify(inp)
+        result = self.verify(inp)
 
-        if result:
-            print(output)
-            print("Correct!")
+        if result.correct():
+            print(result.output())
+            print(result.message())
+            print()
             if self.outro:
                 print(self.outro)
         else:
-            print("Incorrect, try again")
+            print(result.message())
+            print()
             self.do()
 
     def verify(self, inp):
-        return "", False
+        pass
 
 
 class QuestionEx(InputOutputEx):
@@ -42,4 +46,7 @@ class QuestionEx(InputOutputEx):
         self.answer = answer
 
     def verify(self, inp):
-        return "", self.answer == inp
+        if self.answer == inp:
+            return CorrectResult("Correct!")
+        else:
+            return ErrorResult("Wrong, try again!")
