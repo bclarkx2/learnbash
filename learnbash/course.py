@@ -40,3 +40,6 @@ class Course(Cmd):
     def do_start(self, line):
         if not self.lessons.start(line):
             print("No such lesson!")
+
+    def complete_start(self, text, line, begidx, endidx):
+        return self.lessons.matching(text)

@@ -27,3 +27,6 @@ class Starter(object):
             return True
         else:
             return False
+
+    def matching(self, text):
+        return [n for n in self.names() if n.startswith(text)]

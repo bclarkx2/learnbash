@@ -45,3 +45,7 @@ class Learner(Cmd):
         """Start a course"""
         if not self.courses.start(line):
             print("No such course!")
+
+    def complete_start(self, text, line, begidx, endidx):
+        return self.courses.matching(text)
+
