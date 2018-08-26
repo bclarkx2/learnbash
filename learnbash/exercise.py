@@ -5,12 +5,22 @@
 
 from result import CorrectResult, ErrorResult
 
-    
+
+###############################################################################
+# Base class                                                                  #
+###############################################################################
+
+class Exercise(object):
+
+    def do(self):
+        raise NotImplementedError("implement me!")
+
+
 ###############################################################################
 # Classes                                                                     #
 ###############################################################################
 
-class InputOutputEx(object):
+class InputOutputEx(Exercise):
 
     def __init__(self, intro, outro=""):
         super().__init__()
