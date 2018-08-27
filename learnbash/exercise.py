@@ -4,6 +4,8 @@
 ###############################################################################
 
 from result import CorrectResult, ErrorResult
+from history import ExerciseHistory
+from mistake import HintHandler, NoHandler
 
 
 ###############################################################################
@@ -22,10 +24,12 @@ class Exercise(object):
 
 class InputOutputEx(Exercise):
 
-    def __init__(self, intro, outro=""):
+    def __init__(self, handler, intro, outro=""):
         super().__init__()
         self.intro = intro
         self.outro = outro
+        self._history = ExerciseHistory()
+        self._handler = handler
 
     def do(self):
         print(self.intro)
@@ -33,6 +37,7 @@ class InputOutputEx(Exercise):
         inp = input()
 
         result = self.verify(inp)
+        self.record(result)
 
         if result.correct():
             print(result.output())
@@ -41,9 +46,16 @@ class InputOutputEx(Exercise):
             if self.outro:
                 print(self.outro)
         else:
-            print(result.message())
+            print(self.mistake_message())
             print()
             self.do()
+
+    # delegate recording to history object
+    def record(self, result):
+        self._history.record(result)
+
+    def mistake_message(self):
+        return self._handler.form_message(self._history)
 
     def verify(self, inp):
         pass
@@ -51,12 +63,16 @@ class InputOutputEx(Exercise):
 
 class QuestionEx(InputOutputEx):
 
-    def __init__(self, intro, answer, outro=""):
-        super().__init__(intro, outro)
+    def __init__(self, intro, answer, outro="", mistake_limit=0, hint=""):
+        if hint and mistake_limit:
+            handler = HintHandler(mistake_limit, hint)
+        else:
+            handler = NoHandler()
+        super().__init__(handler, intro, outro)
         self.answer = answer
 
     def verify(self, inp):
         if self.answer == inp:
-            return CorrectResult("Correct!")
+            return CorrectResult("")
         else:
             return ErrorResult("Wrong, try again!")
