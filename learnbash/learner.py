@@ -29,6 +29,10 @@ class Learner(Cmd):
     def learn(self):
         self.cmdloop()
 
+    # need to wipe out cmdqueue to ignore cmd line args
+    def preloop(self):
+        self.cmdqueue = []
+
     # Commands
 
     def do_quit(self, line):

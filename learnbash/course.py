@@ -25,6 +25,10 @@ class Course(Cmd):
     def start(self):
         self.cmdloop()
 
+    # need to wipe out cmdqueue to ignore cmd line args
+    def preloop(self):
+        self.cmdqueue = []
+
     def do_hello(self, line):
         print("Course says hello")
 
