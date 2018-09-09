@@ -21,8 +21,19 @@ class Lesson(Cmd):
         self.prompt = "{}>".format(self.name)
         self.intro = "Starting lesson: {}".format(self.name)
 
+    def num_exercises(cls):
+        return sum(x.counts_as_exercise() for x in cls.items)
+
     def start(self):
+        num_ex = self.num_exercises()
+        ex_idx = 0
         for item in self.items:
+            if item.counts_as_exercise():
+                ex_idx += 1
+                progress = "[Ex {}/{}]".format(
+                    ex_idx,
+                    num_ex)
+                print(progress, end=" ")
             item.do()
 
     def do_hello(self):

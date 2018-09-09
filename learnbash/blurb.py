@@ -15,3 +15,6 @@ class Blurb(object):
 
     def do(self):
         print(self.msg)
+
+    def counts_as_exercise(self):
+        return False
