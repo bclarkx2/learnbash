@@ -17,6 +17,9 @@ class Exercise(object):
     def do(self):
         raise NotImplementedError("implement me!")
 
+    def counts_as_exercise(self):
+        return True
+
 
 ###############################################################################
 # Classes                                                                     #
